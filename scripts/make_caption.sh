@@ -12,13 +12,14 @@ ROOM_NAME="${1:-room1}"  # Default to room1 if no argument provided
 # Option 1: OpenAI models
 # Uncomment the following lines and set your API key:
 # export OPENAI_API_KEY="your-openai-api-key"
-MODEL_NAME="gpt-4o-mini"
+# MODEL_NAME="gpt-4o-mini"
 
 # Option 2: vLLM server (local or remote)
 # Uncomment the following lines and set your server details:
 # MODEL_NAME="llava"
-# AGENT_HOSTNAME="localhost"
-# AGENT_PORT=39002
+MODEL_NAME="Qwen/Qwen3-VL-8B-Instruct"
+AGENT_HOSTNAME="localhost"
+AGENT_PORT=8000
 
 # Initialize Virtualenvs
 conda activate vis-escape
