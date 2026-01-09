@@ -26,12 +26,17 @@ def save_run_history(
     run_start_time: str,
     current_dir: str,
     agent_type: str = None,
+    run_name: str = None,
 ):
+    if run_name is None:
+        run_name = "default_run"
+
     if agent_type:
         log_dir = os.path.join(
             RESULTS_DIR,
             f"{agent_type}",
             "logs",
+            run_name,
             model_name,
             run_mode,
             hint_mode,
@@ -42,6 +47,7 @@ def save_run_history(
             RESULTS_DIR,
             f"{run_mode}",
             "logs",
+            run_name,
             model_name,
             run_mode,
             hint_mode,

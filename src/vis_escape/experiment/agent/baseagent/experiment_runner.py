@@ -13,7 +13,8 @@ from .agent import Agent
 from .. import utils
 
 class AIExperimentRunner:
-    def __init__(self, room_name, model_mapping, run_mode, hint_mode):
+    def __init__(self, room_name, model_mapping, run_mode, hint_mode, run_name=None):
+        self.run_name = run_name
         self.room_name = room_name
         self.model_mapping = model_mapping
         self.run_mode = run_mode
@@ -30,6 +31,7 @@ class AIExperimentRunner:
         self.previous_game_state = None
         self.previous_message = None
         self.shuffle_action = True
+        
         #for AI inputs
         self.previous_scene_path = None
         self.previous_action = None
@@ -54,7 +56,8 @@ class AIExperimentRunner:
             self.hint_mode,
             self.run_start_time,
             self.current_dir,
-            "BaseAgent"
+            "BaseAgent",
+            self.run_name
         )
     def isquiz(self):
         if self.current_game_state.current_view == "ITEM" and self.current_game_state.current_item:

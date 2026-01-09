@@ -74,6 +74,7 @@ def run_multiple_experiments(
     model_mapping: Mapping[str, Mapping[str, str]],
     run_mode: str,
     hint_mode: str,
+    run_name: str = None,
 ):
     print(f"\nRunning {num_experiments} experiments for {room_name}")
     print("-" * 50)
@@ -89,6 +90,7 @@ def run_multiple_experiments(
             model_mapping=model_mapping,
             run_mode=run_mode,
             hint_mode=hint_mode,
+            run_name=run_name
         )
         result = runner.run_experiment(max_steps=max_steps)
 
@@ -129,10 +131,16 @@ def run_multiple_experiments(
     default=200,
     help="Maximum number of steps per experiment (default: 200)",
 )
+@click.option(
+    "--run-name",
+    type=str,
+    default="default_run",
+    help="Name of experiment"
+)
 @click.option("-m", "--model-name", type=str, default="gpt4o-mini")
 @click.option("-t", "--hint-mode", type=str, default="no_hint")
 @click.option("-r", "--run-mode", type=str, default="vlm")
-def main(room_name, num_experiments, max_steps, model_name, hint_mode, run_mode):
+def main(room_name, num_experiments, max_steps, model_name, hint_mode, run_mode, run_name):
     """Run AI experiments for room escape."""
     check_file(room_name)
     model_mapping = get_model_mapping(run_mode=run_mode, model_name=model_name)
@@ -144,6 +152,7 @@ def main(room_name, num_experiments, max_steps, model_name, hint_mode, run_mode)
         model_mapping,
         run_mode,
         hint_mode,
+        run_name
     )
 
 
