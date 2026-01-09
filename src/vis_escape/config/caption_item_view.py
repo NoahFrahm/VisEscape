@@ -88,7 +88,6 @@ def main(assets_dir, model_name, agent_hostname, agent_port):
     # Get base url for vLLM (None if using OpenAI)
     base_url = f"http://{agent_hostname}:{agent_port}/v1" if agent_hostname and agent_port else None
 
-
     # Process each item view JSON file
     for json_path in item_view_dir.glob("*.json"):
         print(f"\nProcessing item view file: {json_path.name}")
