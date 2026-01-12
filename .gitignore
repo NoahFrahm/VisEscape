@@ -5,6 +5,7 @@ __pycache__/
 
 # Folders
 assets/
+results/
 
 # C extensions
 *.so

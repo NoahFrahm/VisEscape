@@ -29,7 +29,7 @@ if [ "$HINT_FLAG" = "hint" ]; then
 fi
 
 # Base results directory
-BASE_RESULTS="./results"
+BASE_RESULTS=".scripts/results/Agent"
 
 # Determine rooms
 if [ -n "$ROOM_FILTER" ]; then

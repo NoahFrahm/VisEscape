@@ -12,7 +12,8 @@ from .agent import Agent
 
 
 class AIExperimentRunner:
-    def __init__(self, room_name, model_mapping, run_mode, hint_mode):
+    def __init__(self, room_name, model_mapping, run_mode, hint_mode, run_name=None):
+        self.run_name = run_name
         self.room_name = room_name
         self.model_mapping = model_mapping
         self.run_mode = run_mode
@@ -57,7 +58,8 @@ class AIExperimentRunner:
             self.hint_mode,
             self.run_start_time,
             self.current_dir,
-            "VisEscaper"
+            "VisEscaper",
+            self.run_name
         )
 
     def isquiz(self):

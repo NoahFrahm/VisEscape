@@ -132,7 +132,7 @@ def run_multiple_experiments(
     help="Maximum number of steps per experiment (default: 200)",
 )
 @click.option(
-    "--run-name",
+    "-rn", "--run-name",
     type=str,
     default="default_run",
     help="Name of experiment"
@@ -140,7 +140,7 @@ def run_multiple_experiments(
 @click.option("-m", "--model-name", type=str, default="gpt4o-mini")
 @click.option("-t", "--hint-mode", type=str, default="no_hint")
 @click.option("-r", "--run-mode", type=str, default="vlm")
-def main(room_name, num_experiments, max_steps, model_name, hint_mode, run_mode, run_name):
+def main(room_name, num_experiments, max_steps, run_name, model_name, hint_mode, run_mode):
     """Run AI experiments for room escape."""
     check_file(room_name)
     model_mapping = get_model_mapping(run_mode=run_mode, model_name=model_name)

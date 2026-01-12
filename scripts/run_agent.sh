@@ -3,8 +3,8 @@
 ASSET_ROOT="./assets"
 
 DEFAULT_AGENT_TYPE="base"  # base vs visescaper
-DEFAULT_MODEL="Qwen/Qwen3-VL-8B-Instruct"
-DEFAULT_NUM=5
+DEFAULT_MODEL="qwen3"
+DEFAULT_NUM=1
 DEFAULT_HINT="no_hint" #no_hint vs hint
 DEFAULT_RUNMODE="vlm"
 
@@ -37,7 +37,7 @@ for room in "${ROOMS[@]}"; do
           -n "$NUM_EXPTS" \
           -t "$HINT_MODE" \
           -r "$RUN_MODE" \
-          -run-name "$RUN_NAME"
+          -rn "$RUN_NAME"
   elif [ "$AGENT_TYPE" = "visescaper" ]; then
       echo "Running visescaper agent..."
       python scripts/run_visescaper.py "$room" \
@@ -45,7 +45,7 @@ for room in "${ROOMS[@]}"; do
           -n "$NUM_EXPTS" \
           -t "$HINT_MODE" \
           -r "$RUN_MODE" \
-          -run-name "$RUN_NAME"
+          -rn "$RUN_NAME"
   else
       echo "Error: Unknown agent type '$AGENT_TYPE'. Use 'base' or 'visescaper'."
       exit 1
