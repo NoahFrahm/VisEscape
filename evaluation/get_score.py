@@ -126,8 +126,7 @@ if __name__ == "__main__":
     metrics['room'] = args.room
 
     print_metrics(metrics)
-    # breakpoint()
-
+    
     df = pd.DataFrame([metrics])
     csv_path = ensure_csv_ext(args.out_file)
     write_header = not os.path.exists(csv_path)

@@ -19,6 +19,10 @@ models:
   "Qwen/Qwen3-VL-8B-Instruct":
     type: vllm
     base_url: http://localhost:8000/v1
+  
+  "Qwen/Qwen3-VL-32B-Instruct":
+    type: vllm
+    base_url: http://localhost:8000/v1
 
   
 
@@ -39,6 +43,10 @@ presets:
     vlm: "OpenGVLab/InternVL2_5-38B"
     llm: "Qwen/Qwen2.5-32B-Instruct"
   
-  qwen3:
+  qwen3-8B:
     vlm: "Qwen/Qwen3-VL-8B-Instruct"
     llm: "Qwen/Qwen3-VL-8B-Instruct"
+  
+  qwen3-32B:
+    vlm: "Qwen/Qwen3-VL-32B-Instruct"
+    llm: "Qwen/Qwen3-VL-32B-Instruct"

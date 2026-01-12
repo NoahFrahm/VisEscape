@@ -5,8 +5,12 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 # Variables
 ASSET_ROOT="./assets"
 
+# Default values
+DEFAULT_MODEL_NAME="Qwen/Qwen3-VL-8B-Instruct"
+
 # Parse command line arguments
-ROOM_NAME="$1"
+MODEL_NAME="${1:-$DEFAULT_MODEL_NAME}"   
+ROOM_NAME="$2"
 
 # ===== Choose your configuration =====
 # Option 1: OpenAI models
@@ -15,7 +19,6 @@ ROOM_NAME="$1"
 # MODEL_NAME="gpt-4o-mini"
 
 # Option 2: vLLM server (local or remote)
-MODEL_NAME="Qwen/Qwen3-VL-8B-Instruct"
 AGENT_HOSTNAME="localhost"
 AGENT_PORT=8000
 
