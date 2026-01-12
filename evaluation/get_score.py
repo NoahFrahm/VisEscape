@@ -1,8 +1,10 @@
 import json
-import sys
+import csv
+import pandas as pd
+import os
 import argparse
-from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict
+from src.vis_escape.utils import ensure_csv_ext
 
 ORACLE_STEPS = {
     1: 28, 2: 26, 3: 31, 4: 39, 5: 36, 6: 23, 7: 22, 8: 31, 9: 33, 10: 28,
@@ -112,12 +114,25 @@ if __name__ == "__main__":
                         help='Room number (1-20)')
     parser.add_argument('--hint', action='store_true',
                         help='Enable hint mode analysis')
+    parser.add_argument('--out-file', required=True,
+                        help='file path to save metrics to')
     
     args = parser.parse_args()
     
     hint_mode = "hint" if args.hint else "no_hint"
     
     metrics = analyze_trajectory(args.trajectory, args.room, hint_mode)
+    metrics['trajectory_name'] = args.trajectory
+    metrics['room'] = args.room
+
     print_metrics(metrics)
+    # breakpoint()
+
+    df = pd.DataFrame([metrics])
+    csv_path = ensure_csv_ext(args.out_file)
+    write_header = not os.path.exists(csv_path)
+    df.to_csv(csv_path, mode="a", header=write_header, index=False,
+        columns=["room", "success","steps", "progress", "goal_completion_ratio", "spl", "trajectory_name"],
+    )
 
 

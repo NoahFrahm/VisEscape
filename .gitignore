@@ -186,6 +186,9 @@ Thumbs.db
 # Video files
 **/*.mp4
 
+# Zip files
+*.zip
+
 
 # Logs
 logs/

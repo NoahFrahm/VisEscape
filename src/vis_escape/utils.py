@@ -7,6 +7,12 @@ from openai import OpenAI
 from PIL import Image
 
 
+def ensure_csv_ext(path: str) -> str:
+    root, ext = os.path.splitext(path)
+    if ext.lower() != ".csv":
+        return root + ".csv"
+    return path
+
 def _encode_image(image_path: str) -> str:
     with Image.open(image_path) as img:
         if img.mode != "RGB":
