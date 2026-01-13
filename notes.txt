@@ -1,0 +1,83 @@
+# visescape env setup
+conda create -n vis-escape python=3.9 -y && conda activate vis-escape
+
+pip install poetry
+poetry config virtualenvs.create false # Optional: Deactivate auto virtualenv creation
+poetry install
+pip install "vllm>=0.8.5" # install so we can run local vlm
+
+
+python scripts/run_human.py -r room[room_number]
+
+caption generation script is needed to be updated for models?
+
+conda create -y -n qwen_vllm python=3.12
+conda activate qwen_vllm
+pip install "vllm>=0.8.5"
+
+CUDA_VISIBLE_DEVICES=0 vllm serve Qwen/Qwen3-8B --port 8000
+CUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve Qwen/Qwen3-VL-30B-A3B-Instruct --port 8000 --tensor-parallel-size 4
+
+CUDA_VISIBLE_DEVICES=3 vllm serve Qwen/Qwen3-VL-8B-Instruct --port 8000
+
+CUDA_VISIBLE_DEVICES=0,1 vllm serve Qwen/Qwen3-VL-8B-Instruct \
+--tensor-parallel-size 4 --port 8000 --gpu-memory-utilization 0.6
+
+CUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve Qwen/Qwen3-VL-8B-Instruct \
+--tensor-parallel-size 4 --port 8000 --gpu-memory-utilization 0.75
+
+CUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve Qwen/Qwen3-VL-32B-Instruct \
+--tensor-parallel-size 4 --port 8000 --gpu-memory-utilization 0.75
+
+
+python scripts/run_baseagent.py room[room_number] \
+    -m Qwen/Qwen3-VL-8B-Instruct \
+    -n [num_experiments] \
+    -t [hint_mode] \
+    -r [run_mode]
+
+
+bash VisEscape/scripts/make_captions.sh
+
+
+bash scripts/make_captions.sh
+
+bash run_agents.sh <run_name> <agent_type> <model> <hint_mode> <run_mode> <num_expts> <room>
+
+bash scripts/run_agent.sh test_run visescaper
+bash scripts/run_agent.sh
+bash scripts/run_agent.sh base             # base agent for all rooms
+bash scripts/run_agent.sh visescaper       # visescaper agent for all rooms
+bash scripts/run_agent.sh base room5       # base agent for room5
+
+bash scripts/compute_metrics.sh results/VisEscaper/logs/test_run/Qwen/Qwen3-VL-8B-Instruct/vlm/no_hint
+bash scripts/run_agent.sh <run_name> <agent_type> <model> <hint_mode> <run_mode> <num_expts> <room>
+
+
+ssh -X nofrahm@mbappe.cs.unc.edu
+ssh -Y nofrahm@mbappe.cs.unc.edu
+cd /playpen-nas-ssd4/nofrahm/puzzle/VisEscape
+conda activate vis-escape
+python scripts/run_human.py -r room1
+
+
+
+## Inference flow
+
+# spin up inference server
+CUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve Qwen/Qwen3-VL-32B-Instruct \
+--tensor-parallel-size 4 --port 8000 --gpu-memory-utilization 0.75
+
+# update config to include model
+VisEscape/src/vis_escape/config/yamls/endpoints.yaml
+
+# generate captions
+bash scripts/make_captions.sh Qwen/Qwen3-VL-32B-Instruct
+
+# run inference specifying model
+bash scripts/run_agent.sh test_run visescaper qwen3-32B
+
+# compute metrics
+bash scripts/compute_metrics.sh results/VisEscaper/logs/test_run/Qwen/Qwen3-VL-32B-Instruct/vlm/no_hint
+
+# make script go through and compute metrics for all in folder?

@@ -134,4 +134,8 @@ if __name__ == "__main__":
         columns=["room", "success","steps", "progress", "goal_completion_ratio", "spl", "trajectory_name"],
     )
 
+    # convert these into the summary metrics as seen in paper
+    # - by room compute the deviation and averages for each metric
+    # - aggregate across rooms to get overall averages and deviations
+
 

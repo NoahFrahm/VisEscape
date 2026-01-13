@@ -8,7 +8,7 @@ models:
     type: openai
     model_name: gpt-4o-2024-08-06
 
-  "OpenGVLab/InternVL2_5-38B":
+  OpenGVLab/InternVL2_5-38B":
     type: vllm
     base_url: http://127.0.0.1:39031/v1
   
